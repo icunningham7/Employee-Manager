@@ -14,7 +14,7 @@ class MainMenu extends Action {
         this.dict = {
             'View All Employees': ViewEmployees,
             'View All Roles': ViewRoles,
-            // 'View All Departments': ViewDepartments,
+            'View All Departments': ViewDepartments,
             // 'Add Employee': AddEmployee
         };
 
@@ -29,15 +29,18 @@ class MainMenu extends Action {
         ];
     }
     async run() {
-        while (!this.quit) {
+        do {
             const answer = await inquirer.prompt(this.prompt)
-            if (answer.menuPrompt === 'Quit') {
+            console.log(answer.menuPrompt);
+            if (answer.menuPrompt == 'Quit') {
+                this.quit = true;
                 return
             }
             const actionClass = this.dict[answer.menuPrompt];
             let action = new actionClass();
             await action.run();
-        }
+        } while (!this.quit);
+        return
     }
 }
 

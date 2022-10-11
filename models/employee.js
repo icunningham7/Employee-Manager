@@ -1,6 +1,6 @@
 // import { Model, DataTypes } from "sequelize";
 const mysql = require('mysql2');
-const Role = require('./role');
+// const Role = require('./role');
 const connection = require('../config/connection');
 
 

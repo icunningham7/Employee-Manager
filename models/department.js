@@ -1,29 +1,20 @@
 // const connection = require('../config/connection');
-// const { Model, DataTypes } = require('sequelize');
 
+// class Department {
+//     constructor() {
+//         this.sql = 'SELECT * FROM departments;';
+//     };
 
-// class Department extends Model { }
+//     static async findAll() {
+//         const departments = await connection.promise().query(this.sql)
+//             .then((results) => results[0])
+//             .catch((err) => {
+//                 throw err;
+//             });
+//         return departments;
+//     };
 
-// Department.init(
-//     {
-//         id: {
-//             type: DataTypes.INTEGER,
-//             primaryKey: true,
-//             autoIncrement: true
-//         },
-//         name: {
-//             type: DataTypes.STRING(30),
-//             allowNull: false,
-//             unique: true
-//         }
-//     },
-//     {
-//         sequelize: connection,
-//         timestamps: false
-
-//     }
-// );  
-    
+// }
 // module.exports = Department;
 
 

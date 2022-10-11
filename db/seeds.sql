@@ -23,3 +23,14 @@ INSERT INTO roles (title, salary, department_id)
             ('Digital Advertising', 65000, 5),
             ('Content Specialist', 45000, 5);
 
+
+INSERT INTO employees (first_name, last_name, role_id, manager_id)
+    VALUES  ('John',    'Doe',      5,  NULL),
+            ('Mike',    'Chan',     7,  NULL),
+            ('Ash',     'Rice',     3,  1),
+            ('Kumar',   'Smith',    10, 2),
+            ('Sam',     'Henry',    2,  4),
+            ('Sara',    'Jenson',   7,  4),
+            ('Tom',     'Allen',    1,  3),
+            ('Kevin',   'Samuel',   4,  7)
+

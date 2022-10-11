@@ -1,20 +1,15 @@
 const connection = require('../config/connection');
+const Department = require('../models/department');
 const cTable = require('console.table');
-// const Department = require('../models/department.js');
 const Action = require('./action.js');
 
 class ViewDepartments extends Action {
-    sql = 'SELECT * FROM departments;';
     async run() {
-        const departments = await connection.promise().query(this.sql)
-            .then((results) => results[0])
-            .then((rows) => {
-                console.table(rows);
-            })
-            .catch((err) => {
-                throw err;
-            });
-        return departments;
+        const departments = await Department.getAllDepartments();
+        const rowPromises = departments.map((department) => department.toRow());
+        const rows = await Promise.all(rowPromises);
+        console.table(`\n All Departments`, rows);
+        return
     }
 }
 

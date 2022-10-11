@@ -1,41 +1,33 @@
-// const connection = require('../config/connection');
+const connection = require("../config/connection");
 
-// class Department {
-//     constructor() {
-//         this.sql = 'SELECT * FROM departments;';
-//     };
+class Department {
+    constructor(data = {}) {
+        this.id = data.id;
+        this.name = data.name;
+    };
 
-//     static async findAll() {
-//         const departments = await connection.promise().query(this.sql)
-//             .then((results) => results[0])
-//             .catch((err) => {
-//                 throw err;
-//             });
-//         return departments;
-//     };
+    async toRow() {
+        const row = {
+            id: this.id,
+            name: this.name
+        };
+        return row;
+    };
 
-// }
-// module.exports = Department;
+    static async getAllDepartments() {
+        const sql = "SELECT * FROM departments;";
+        const allDepartments = await connection.promise().query(sql);
+        return allDepartments[0].map((row) => {
+            return new Department(row);
+        });
+    };
 
+    async createDepartmentRecord() {
+        console.log(`Added ${this.name} to the database`);
+        const sql = "INSERT INTO departments (name) VALUES (?);";
+        await connection.promise().query(sql, [this.name]);
+        return
+    }
+}
 
-
-//     // getRoles() {
-//     //     // use query from query manager
-//     // }
-
-//     // getEmployees() {
-//     //     // use query from query manager
-//     // }
-// //  DB table fields
-//     // id
-//     // name
-
-// //  Method for adding a department
-
-
-// //  Bonus
-//     // Method for deleting departments
-
-// // Add elsewhere
-//     //  Method for looking up all departments
-//     //  Method for looking up one department
+module.exports = Department;

@@ -121,7 +121,7 @@ class Employee {
         });
     };
 
-    static async getEmployeesByManager() {
+    async getEmployeesByManager() {
         const sql = "SELECT * FROM employees WHERE manager_id = ?;";
         const allEmployees = await connection.promise().query(sql, [this.id]);
         return allEmployees[0].map((row) => {

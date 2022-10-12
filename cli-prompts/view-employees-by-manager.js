@@ -32,11 +32,14 @@ class ViewEmployeesByManager extends Action {
         let manager = new Employee();
         manager.id = answers.manager;
         await manager.loadEmployeeData();
-        manager.fullName = manager.getName();
+        manager.fullName = await manager.getName();
         const employees = await manager.getEmployeesByManager();
-        const rowPromises = employees.map((employee) => employee.toRow());
+        const rowPromises = employees.map((employee) => {
+            employee.loadEmployeeData();
+            return employee.toRow();
+        });
         const rows = await Promise.all(rowPromises);
-        console.table(`\n Employees Managed by ${manager.fullName}`, rows);
+        console.table(`\n Employees Managed`, rows);
         return
     }
 }

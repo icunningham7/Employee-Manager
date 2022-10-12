@@ -34,10 +34,7 @@ class ViewEmployeesByManager extends Action {
         await manager.loadEmployeeData();
         manager.fullName = await manager.getName();
         const employees = await manager.getEmployeesByManager();
-        const rowPromises = employees.map((employee) => {
-            employee.loadEmployeeData();
-            return employee.toRow();
-        });
+        const rowPromises = employees.map((employee) => employee.toRow());
         const rows = await Promise.all(rowPromises);
         console.table(`\n Employees Managed`, rows);
         return

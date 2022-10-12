@@ -122,7 +122,7 @@ class Employee {
     };
 
     async getEmployeesByManager() {
-        const sql = "SELECT * FROM employees WHERE manager_id = ?;";
+        const sql = "SELECT employees.id, employees.first_name, employees.last_name, employees.role_id, roles.title AS role_title, departments.name AS department_name, roles.salary, employees.manager_id, CONCAT(manager.first_name, ' ', manager.last_name) AS manager_name FROM employees JOIN roles ON employees.role_id = roles.id JOIN departments ON roles.department_id = departments.id LEFT JOIN employees manager ON employees.manager_id = manager.id WHERE employees.manager_id = ?;";
         const allEmployees = await connection.promise().query(sql, [this.id]);
         return allEmployees[0].map((row) => {
             return new Employee(row)

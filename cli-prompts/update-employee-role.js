@@ -39,6 +39,7 @@ class UpdateEmployeeRole extends Action {
                 type: 'list',
                 message: "Which employee's role do you want to update?",
                 choices: employeeChoices,
+                loop: true,
                 name: 'updatedEmployee'
             },
             {
@@ -65,7 +66,6 @@ class UpdateEmployeeRole extends Action {
         updatedEmployee.id = answers.updatedEmployee;
         updatedEmployee.role_id = answers.updatedRole;
         updatedEmployee.manager_id = answers.updatedManager;
-
         await updatedEmployee.updateEmployeeRecord();
         return
     }

@@ -8,7 +8,7 @@ class AddEmployee extends Action {
 
     async getPrompt() {
         const employees = await Employee.getAllEmployees();
-        let managerChoices = employees.map((employee) => {
+        let managerChoices = await employees.map((employee) => {
             return {
                 name: employee.getName(),
                 value: employee.id

@@ -9,7 +9,7 @@ class ViewEmployeesByManager extends Action {
     async getPrompt() {
 
         const managers = await Employee.getAllEmployees();
-        let managerChoices = await managers.map((manager) => {
+        let managerChoices = managers.map((manager) => {
             return {
                 name: manager.getName(),
                 value: manager.id
@@ -31,7 +31,8 @@ class ViewEmployeesByManager extends Action {
         const answers = await inquirer.prompt(prompt);
         let manager = new Employee();
         manager.id = answers.manager;
-        manager.fullName = await manager.getName();
+        await manager.loadEmployeeData();
+        manager.fullName = manager.getName();
         const employees = await manager.getEmployeesByManager();
         const rowPromises = employees.map((employee) => employee.toRow());
         const rows = await Promise.all(rowPromises);

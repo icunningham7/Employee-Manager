@@ -13,8 +13,7 @@ class Employee {
         this.manager_name = data.manager_name;
     };
 
-    async getName() {
-        this.loadEmployeeData();
+    getName() {
         return `${this.first_name} ${this.last_name}`;
     };
 
@@ -90,33 +89,19 @@ class Employee {
     };
 
     async loadEmployeeData() {
-        if (!this.first_name || !this.last_name) {
-            this.loadEmployeeName();
-        }
-        if (!this.role_id) {
-            this.loadRoleId();
-        }
-        if (!this.role_title) {
-            this.loadRoleTitle();
-        }
-        if (!this.salary) {
-            this.loadRoleSalary();
-        }
-        if (!this.department_name) {
-            this.loadDepartmentName();
-        }
-        if (!this.manager_id) {
-            this.loadManagerId();
-        }
-        if (!this.manager_name) {
-            this.loadManagerName();
-        }
+        await this.loadEmployeeName();
+        await this.loadRoleId();
+        await this.loadRoleTitle();
+        await this.loadRoleSalary();
+        await this.loadDepartmentName();
+        await this.loadManagerId();
+        await this.loadManagerName();
         return;
     }
 
     async toRow() {
         await this.loadEmployeeData();
-        const row = { 
+        const row = {
             id: this.id,
             first_name: this.first_name,
             last_name: this.last_name,
@@ -154,7 +139,7 @@ class Employee {
     async updateEmployeeRecord() {
         console.log(`Updated employee in the database`);
         const sql = "UPDATE employees SET role_id = ?, manager_id = ? WHERE id = ?;";
-        await connection.promise().query(sql, [this.id, this.role_id, this.manager_id]);
+        await connection.promise().execute(sql, [this.role_id, this.manager_id, this.id]);
         return
     }
 }

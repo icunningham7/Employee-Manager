@@ -56,7 +56,7 @@ class UpdateEmployeeRole extends Action {
                 name: 'updatedManager'
             }
         ];
-
+        return prompt;
     }
     async run() {
         const prompt = await this.getPrompt();

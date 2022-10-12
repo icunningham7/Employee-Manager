@@ -26,7 +26,7 @@ class AddRole extends Action {
                 name: 'roleSalary'
             },
             {
-                type: 'input',
+                type: 'list',
                 message: "Which department does the role belong to?",
                 choices: departmentChoices,
                 loop: true,
@@ -41,7 +41,7 @@ class AddRole extends Action {
         const answers = await inquirer.prompt(prompt);
         let newRole = new Role();
         newRole.title = answers.roleName;
-        newRole.salary = answers.salary;
+        newRole.salary = answers.roleSalary;
         newRole.department_id = answers.roleDepartment;
 
         await newRole.createRoleRecord();

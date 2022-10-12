@@ -1,11 +1,11 @@
 const MainMenu = require('./cli-prompts/menu');
 
-function init() {
+async function init() {
     const menu = new MainMenu();
-    menu.run();
-    console.log('passed menu run');
+    await menu.run();
+    return
  };
 
-init();
+init().then(() => process.exit());
 
 

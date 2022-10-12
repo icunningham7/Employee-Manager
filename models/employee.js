@@ -32,7 +32,7 @@ class Employee {
         if (this.manager_name) {
             return
         }
-        const sql = "SELECT CONCAT(manager.first_name. ' ', manager.last_name) AS manager_name FROM employees AS manager WHERE manager.id = ?;";
+        const sql = "SELECT CONCAT(manager.first_name, ' ', manager.last_name) AS manager_name FROM employees AS manager WHERE manager.id = ?;";
 
         const data = await connection.promise().query(sql, [this.manager_id]);
         this.manager_name = data[0].manager_name;
@@ -41,8 +41,8 @@ class Employee {
 
 
     async toRow() {
-        this.loadRoleTitle();
-        this.loadManagerName();
+        await this.loadRoleTitle();
+        await this.loadManagerName();
         const row = { 
             id: this.id,
             first_name: this.first_name,
@@ -72,14 +72,14 @@ class Employee {
     }
 
     async createEmployeeRecord() {
-        console.log(`Added ${this.getName()} to the database`);
+        console.log(`Added ${this.first_name} ${this.last_name} to the database`);
         const sql = "INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?);";
         await connection.promise().query(sql, [this.first_name, this.last_name, this.role_id, this.manager_id]);
         return
     }
 
     async updateEmployeeRecord() {
-        console.log(`Updated ${this.getName()} in the database`);
+        console.log(`Updated employee in the database`);
         const sql = "UPDATE employees SET role_id = ?, manager_id = ? WHERE id = ?;";
         await connection.promise().query(sql, [this.id, this.role_id, this.manager_id]);
         return

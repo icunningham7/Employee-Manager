@@ -35,18 +35,14 @@ class MainMenu extends Action {
         ];
     }
     async run() {
-        console.log(this.quit);
-        while (!this.quit) {
+        while (true) {
             const answer = await inquirer.prompt(this.prompt)
-            console.log(`User ${answer.menuPrompt}`);
             if (answer.menuPrompt == 'Quit') {
-                console.log('passed the if');
-                this.quit = true;
                 return
             }
             const actionClass = this.dict[answer.menuPrompt];
             let action = new actionClass();
-            action.run();
+            await action.run();
         };
     }
 }

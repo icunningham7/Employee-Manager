@@ -10,7 +10,7 @@ class Role {
         this.department_name = data.department_name;
     }
 
-    async toRow() {
+    toRow() {
         const row = {
             id: this.id,
             title: this.title,
@@ -18,7 +18,7 @@ class Role {
             salary: this.salary
         }
         return row;
-    }
+    };
 
 
     static async getAllRoles() {

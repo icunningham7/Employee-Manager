@@ -12,7 +12,7 @@ This app is an employee tracking tool for an HR team to track employees, roles, 
 
 See the HR Employee Tracking App in action
 
-![Demo Usage of the HR Employee Tracking App](./assets/HR-Employee-Tracking-App-Demo.webm)
+[Demo Video of the HR Employee Tracking App](https://drive.google.com/file/d/1c_7pxGfL8nBcngZiRAQ8mpasbzU7yZY0/view)
 
 
 ## Project Requirements

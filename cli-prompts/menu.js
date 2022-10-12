@@ -6,6 +6,7 @@ const AddRole = require('./add-role');
 const UpdateEmployeeRole = require('./update-employee-role');
 const ViewDepartments = require('./view-departments');
 const ViewEmployees = require('./view-employees');
+const ViewEmployeesByManager = require('./view-employees-by-manager');
 const ViewRoles = require('./view-roles');
 
 class MainMenu extends Action {
@@ -22,13 +23,14 @@ class MainMenu extends Action {
             'Update Employee Role': UpdateEmployeeRole,
             'Add Role': AddRole,
             'Add Department': AddDepartment,
+            'View Employees by Manager' : ViewEmployeesByManager
         };
 
         this.prompt = [
             {
                 type: 'list',
                 message: 'What would you like to do?',
-                choices: ['View All Employees', 'View All Roles', 'View All Departments', 'Add Employee', 'Update Employee Role',  'Add Role',  'Add Department', 'Quit'],
+                choices: ['View All Employees', 'View All Roles', 'View All Departments', 'Add Employee', 'Update Employee Role',  'Add Role',  'Add Department', 'View Employees by Manager', 'Quit'],
                 loop: true,
                 name: 'menuPrompt'
             }

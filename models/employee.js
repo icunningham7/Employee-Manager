@@ -13,8 +13,30 @@ class Employee {
         this.manager_name = data.manager_name;
     };
 
-    getName() {
+    async getName() {
+        this.loadEmployeeData();
         return `${this.first_name} ${this.last_name}`;
+    };
+
+    async loadEmployeeName() {
+        if (this.first_name && this.last_name) {
+            return
+        }
+        const sql = "SELECT employees.first_name, employees.last_name FROM employees WHERE employees.id = ?;"
+
+        const data = await connection.promise().query(sql, [this.id]);
+        this.first_name = data[0].first_name;
+        this.last_name = data[0].last_name;
+    };
+
+    async loadRoleId() {
+        if (this.role_id) {
+            return
+        }
+        const sql = "SELECT employees.role_id FROM employees WHERE employees.id = ?;"
+
+        const data = await connection.promise().query(sql, [this.id]);
+        this.role_id = data[0].role_id;
     };
 
     async loadRoleTitle() {
@@ -25,24 +47,75 @@ class Employee {
 
         const data = await connection.promise().query(sql, [this.role_id]);
         this.role_title = data[0].title;
-        console.log(this.role_title);
+    };
+
+    async loadRoleSalary() {
+        if (this.salary) {
+            return
+        }
+        const sql = "SELECT roles.salary FROM roles WHERE roles.id = ?;"
+
+        const data = await connection.promise().query(sql, [this.role_id]);
+        this.salary = data[0].salary;
+    };
+
+    async loadDepartmentName() {
+        if (this.department_name) {
+            return
+        }
+        const sql = "SELECT departments.name FROM departments JOIN roles On roles.department_id = departments.id WHERE roles.id = ?;"
+
+        const data = await connection.promise().query(sql, [this.role_id]);
+        this.salary = data[0].salary;
+    };
+
+    async loadManagerId() {
+        if (this.role_id) {
+            return
+        }
+        const sql = "SELECT employees.manager_id FROM employees WHERE employees.id = ?;"
+
+        const data = await connection.promise().query(sql, [this.id]);
+        this.manager_id = data[0].manager_id;
     };
 
     async loadManagerName() {
-        if (this.manager_name) {
+        if (this.department_name) {
             return
         }
         const sql = "SELECT CONCAT(manager.first_name, ' ', manager.last_name) AS manager_name FROM employees AS manager WHERE manager.id = ?;";
 
         const data = await connection.promise().query(sql, [this.manager_id]);
         this.manager_name = data[0].manager_name;
-        console.log(this.manager_name);
     };
 
+    async loadEmployeeData() {
+        if (!this.first_name || !this.last_name) {
+            this.loadEmployeeName();
+        }
+        if (!this.role_id) {
+            this.loadRoleId();
+        }
+        if (!this.role_title) {
+            this.loadRoleTitle();
+        }
+        if (!this.salary) {
+            this.loadRoleSalary();
+        }
+        if (!this.department_name) {
+            this.loadDepartmentName();
+        }
+        if (!this.manager_id) {
+            this.loadManagerId();
+        }
+        if (!this.manager_name) {
+            this.loadManagerName();
+        }
+        return;
+    }
 
     async toRow() {
-        await this.loadRoleTitle();
-        await this.loadManagerName();
+        await this.loadEmployeeData();
         const row = { 
             id: this.id,
             first_name: this.first_name,

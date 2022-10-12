@@ -4,12 +4,12 @@ const cTable = require('console.table');
 const Action = require('./action');
 const inquirer = require('inquirer');
 
-class ViewEmployees extends Action {
+class ViewEmployeesByManager extends Action {
 
     async getPrompt() {
 
         const managers = await Employee.getAllEmployees();
-        let managerChoices = managers.map((manager) => {
+        let managerChoices = await managers.map((manager) => {
             return {
                 name: manager.getName(),
                 value: manager.id
@@ -24,20 +24,21 @@ class ViewEmployees extends Action {
                 name: 'manager'
             },
         ];
+        return prompt
     }
     async run() {
-        const managers = await this.getPrompt();
+        const prompt = await this.getPrompt();
         const answers = await inquirer.prompt(prompt);
         let manager = new Employee();
         manager.id = answers.manager;
-        manager.name = manager.getName();
+        manager.fullName = await manager.getName();
         const employees = await manager.getEmployeesByManager();
         const rowPromises = employees.map((employee) => employee.toRow());
         const rows = await Promise.all(rowPromises);
-        console.table(`\n Managed Employees`, rows);
+        console.table(`\n Employees Managed by ${manager.fullName}`, rows);
         return
     }
 }
 
-module.exports = ViewEmployees;
+module.exports = ViewEmployeesByManager;
 
